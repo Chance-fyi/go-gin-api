@@ -3,18 +3,23 @@ package boot
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"go-gin-api/pkg/config"
 	"go-gin-api/routers"
 	"net/http"
 )
 
-type route struct{}
+type route struct {
+	Port int
+}
 
 var Route = route{}
 
 func (*route) Init() {
-	err := SetRouter().Run(":8000")
+	config.UnmarshalKey("router", &Route)
+
+	err := SetRouter().Run(fmt.Sprintf(":%v", Route.Port))
 	if err != nil {
-		fmt.Println(err.Error())
+		panic(err)
 	}
 }
 
