@@ -9,6 +9,4 @@ var Boot = boot{}
 func (*boot) Init() {
 	//初始化配置
 	config.Init()
-	// 初始化路由
-	Route.Init()
 }
