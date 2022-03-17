@@ -1,9 +1,11 @@
 package config
 
 import (
+	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 	"io/ioutil"
 	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -26,9 +28,11 @@ func Init() {
 		if len(s) > 0 {
 			cfg.Set(cf["name"], s)
 		}
+		configChange(viper.GetViper())
 	}
 }
 
+//读取目录下的配置文件
 func readConfigFile(dirname string) (configFile []map[string]string) {
 	dir, err := ioutil.ReadDir(dirname)
 	if err != nil {
@@ -47,6 +51,17 @@ func readConfigFile(dirname string) (configFile []map[string]string) {
 	return
 }
 
-func UnmarshalKey(key string, rawVal interface{}, opts ...viper.DecoderConfigOption) {
-	_ = cfg.UnmarshalKey(key, rawVal, opts...)
+func configChange(v *viper.Viper) {
+	v.WatchConfig()
+	v.OnConfigChange(func(in fsnotify.Event) {
+		fileName := filepath.Base(in.Name)
+		ext := path.Ext(fileName)
+		name := fileName[0 : len(fileName)-len(ext)]
+		v.SetConfigType(strings.Trim(ext, "."))
+		v.SetConfigName(name)
+		s := v.AllSettings()
+		if len(s) > 0 {
+			cfg.Set(name, s)
+		}
+	})
 }
