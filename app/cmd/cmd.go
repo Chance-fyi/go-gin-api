@@ -4,9 +4,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func AddCommand(cmd *cobra.Command) {
+func RootCommand() *cobra.Command {
+	cmd := &cobra.Command{}
+
 	cmd.AddCommand(
-		cmdServer,
-		cmdTest,
+		testCommand(),
+		serverCommand(),
 	)
+
+	return cmd
 }

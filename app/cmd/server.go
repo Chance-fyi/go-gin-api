@@ -6,15 +6,30 @@ import (
 	"go-gin-api/boot"
 )
 
-var cmdServer = &cobra.Command{
-	Use:   "server",
-	Short: "start http service",
-	Run: func(cmd *cobra.Command, args []string) {
-		mode := gin.ReleaseMode
-		if len(args) > 0 {
-			mode = args[0]
-		}
-		gin.SetMode(mode)
-		boot.Route.Init()
-	},
+type serverOptions struct {
+	Mode string
+}
+
+func serverCommand() *cobra.Command {
+	opt := serverOptions{}
+	server := &cobra.Command{
+		Use:   "server",
+		Short: "start http service",
+		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			boot.Boot.Init()
+		},
+		Run: func(cmd *cobra.Command, args []string) {
+			runServer(opt)
+		},
+	}
+
+	flags := server.Flags()
+	flags.StringVarP(&opt.Mode, "mode", "m", gin.ReleaseMode, "运行模式")
+
+	return server
+}
+
+func runServer(opt serverOptions) {
+	gin.SetMode(opt.Mode)
+	boot.Route.Init()
 }
