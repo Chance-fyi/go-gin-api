@@ -1,0 +1,11 @@
+default = "default"
+
+[connections]
+    [connections.default]
+        type = "mysql"
+        hostname = "localhost"
+        port = 3306
+        username = "root"
+        password = "root"
+        database = "go-gin-api"
+        charset = "utf8mb4"
