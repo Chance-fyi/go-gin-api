@@ -18,23 +18,23 @@ func Logln(a ...interface{}) {
 }
 
 func Logf(format string, a ...interface{}) {
-	color.Note.Sprintf(format, a...)
+	color.Note.Printf(format, a...)
 }
 
 func Success(a ...interface{}) {
-	color.Infop(a...)
+	color.Success.Print(a...)
 }
 
 func Successp(format string, a ...interface{}) {
-	color.Info.Prompt(format, a...)
+	color.Success.Prompt(format, a...)
 }
 
 func Successln(a ...interface{}) {
-	color.Infoln(a...)
+	color.Success.Println(a...)
 }
 
 func Successf(format string, a ...interface{}) {
-	color.Infof(format, a...)
+	color.Success.Printf(format, a...)
 }
 
 func Error(a ...interface{}) {

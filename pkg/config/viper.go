@@ -9,3 +9,7 @@ func UnmarshalKey(key string, rawVal interface{}, opts ...viper.DecoderConfigOpt
 func AllSettings() map[string]interface{} {
 	return cfg.AllSettings()
 }
+
+func GetString(key string) string {
+	return cfg.GetString(key)
+}

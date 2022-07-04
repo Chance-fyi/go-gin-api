@@ -10,6 +10,8 @@ func RootCommand() *cobra.Command {
 	cmd.AddCommand(
 		testCommand(),
 		serverCommand(),
+		genCommand(),
+		migrateCommand(),
 	)
 
 	return cmd

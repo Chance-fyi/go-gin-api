@@ -24,7 +24,7 @@ func serverCommand() *cobra.Command {
 	}
 
 	flags := server.Flags()
-	flags.StringVarP(&opt.Mode, "mode", "m", gin.ReleaseMode, "运行模式")
+	flags.StringVarP(&opt.Mode, "mode", "m", gin.ReleaseMode, "indicates gin mode")
 
 	return server
 }
