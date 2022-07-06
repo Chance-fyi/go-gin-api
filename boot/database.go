@@ -10,7 +10,7 @@ import (
 )
 
 type database struct {
-	Config dbConfig
+	config dbConfig
 }
 
 type dbConfig struct {
@@ -29,14 +29,14 @@ type dbConfig struct {
 var Database = database{}
 
 func (db *database) Init() {
-	config.UnmarshalKey("database", &Database.Config)
-	Db.DB.SetDefaultConnect(Database.Config.Default)
+	config.UnmarshalKey("database", &db.config)
+	Db.DB.SetDefaultConnect(db.config.Default)
 	db.setupDb()
 }
 
 func (db *database) setupDb() {
 	var dialector gorm.Dialector
-	for name, conn := range Database.Config.Connections {
+	for name, conn := range db.config.Connections {
 		switch conn.Type {
 		case "mysql":
 			dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=%v&parseTime=True&loc=Local",
