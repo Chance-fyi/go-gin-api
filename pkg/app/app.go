@@ -12,3 +12,7 @@ func TimeNowInTimezone() time.Time {
 	console.ExitIf(err)
 	return time.Now().In(location)
 }
+
+func IsDebug() bool {
+	return config.GetBool("app.debug")
+}

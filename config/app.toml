@@ -1,1 +1,4 @@
+# whether to enter debugging mode
+debug = true
+# timezone configuration
 timezone = "Asia/Shanghai"

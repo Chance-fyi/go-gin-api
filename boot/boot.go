@@ -11,4 +11,5 @@ func (*boot) Init() {
 	config.Init()
 	Database.Init()
 	Redis.Init()
+	Logger.Init()
 }

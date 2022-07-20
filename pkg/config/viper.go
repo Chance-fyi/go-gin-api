@@ -13,3 +13,7 @@ func AllSettings() map[string]interface{} {
 func GetString(key string) string {
 	return cfg.GetString(key)
 }
+
+func GetBool(key string) bool {
+	return cfg.GetBool(key)
+}
