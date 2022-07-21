@@ -10,20 +10,7 @@ import (
 )
 
 type database struct {
-	config dbConfig
-}
-
-type dbConfig struct {
-	Default     string
-	Connections map[string]struct {
-		Type     string
-		Hostname string
-		Port     int
-		Username string
-		Password string
-		Database string
-		Charset  string
-	}
+	config Db.Config
 }
 
 var Database = database{}
@@ -53,6 +40,6 @@ func (db *database) setupDb() {
 		default:
 			panic(errors.New("database connection not supported"))
 		}
-		Db.DB.CreateConnection(name, dialector)
+		Db.DB.CreateConnection(name, dialector, conn)
 	}
 }

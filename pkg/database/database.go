@@ -4,7 +4,24 @@ import (
 	"fmt"
 	"go-gin-api/pkg/console"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 )
+
+type Config struct {
+	Default     string
+	Connections map[string]connection
+}
+
+type connection struct {
+	Type     string
+	Hostname string
+	Port     int
+	Username string
+	Password string
+	Database string
+	Charset  string
+	Prefix   string
+}
 
 type db struct {
 	defaultConnect string
@@ -35,8 +52,12 @@ func (db *db) Connect(name ...string) *gorm.DB {
 	return db.connections[db.defaultConnect]
 }
 
-func (db *db) CreateConnection(name string, dialector gorm.Dialector) {
-	open, err := gorm.Open(dialector)
+func (db *db) CreateConnection(name string, dialector gorm.Dialector, cfg connection) {
+	open, err := gorm.Open(dialector, &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix: cfg.Prefix,
+		},
+	})
 	console.ExitIf(err)
 	db.connections[name] = open
 }
