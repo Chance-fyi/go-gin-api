@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"go-gin-api/pkg/console"
 	"io/ioutil"
 	"path"
 	"path/filepath"
@@ -21,23 +22,21 @@ func Init() {
 		viper.SetConfigType(cf["ext"])
 		viper.SetConfigName(cf["name"])
 		err := viper.ReadInConfig()
-		if err != nil {
-			panic(err)
-		}
+		console.ExitIf(err)
 		s := viper.AllSettings()
 		if len(s) > 0 {
 			cfg.Set(cf["name"], s)
 		}
 		configChange(viper.GetViper())
 	}
+
+	setEnvVariables(cfg)
 }
 
 //读取目录下的配置文件
 func readConfigFile(dirname string) (configFile []map[string]string) {
 	dir, err := ioutil.ReadDir(dirname)
-	if err != nil {
-		panic(err)
-	}
+	console.ExitIf(err)
 
 	for _, fileInfo := range dir {
 		fileName := fileInfo.Name()
@@ -64,4 +63,15 @@ func configChange(v *viper.Viper) {
 			cfg.Set(name, s)
 		}
 	})
+}
+
+func setEnvVariables(cfg *viper.Viper) {
+	viper.SetConfigFile(".env")
+	err := viper.ReadInConfig()
+	console.ExitIf(err)
+
+	for key, value := range viper.AllSettings() {
+		key = strings.ReplaceAll(key, "_", ".")
+		cfg.Set(key, value)
+	}
 }
