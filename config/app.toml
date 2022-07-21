@@ -1,4 +1,6 @@
+# apply name
+name = "go-gin-api"
 # whether to enter debugging mode
-debug = true
+debug = false
 # timezone configuration
 timezone = "Asia/Shanghai"

@@ -3,7 +3,7 @@ package template
 const TemplateMigration = `package migrations
 
 import (
-	"go-gin-api/pkg/migrate"
+	"{{PackageName}}/pkg/migrate"
 	"gorm.io/gorm"
 )
 

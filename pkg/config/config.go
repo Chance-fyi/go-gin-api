@@ -4,6 +4,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 	"go-gin-api/pkg/console"
+	"go-gin-api/pkg/file"
 	"io/ioutil"
 	"path"
 	"path/filepath"
@@ -66,6 +67,9 @@ func configChange(v *viper.Viper) {
 }
 
 func setEnvVariables(cfg *viper.Viper) {
+	if !file.Exists(".env") {
+		return
+	}
 	viper.SetConfigFile(".env")
 	err := viper.ReadInConfig()
 	console.ExitIf(err)

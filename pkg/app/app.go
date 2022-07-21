@@ -16,3 +16,7 @@ func TimeNowInTimezone() time.Time {
 func IsDebug() bool {
 	return config.GetBool("app.debug")
 }
+
+func Name() string {
+	return config.GetString("app.name")
+}

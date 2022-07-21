@@ -36,8 +36,9 @@ func runGenMigrate(args []string, opt genMigrateOptions) {
 	filePath := fmt.Sprintf("database/migrations/%s.go", fileName)
 
 	generateFile(filePath, template.TemplateMigration, map[string]string{
-		"{{FileName}}": fileName,
-		"{{Connect}}":  opt.Connect,
+		"{{PackageName}}": app.Name(),
+		"{{FileName}}":    fileName,
+		"{{Connect}}":     opt.Connect,
 	})
 
 	console.Successp("Migration file created，after modify it, use `migrate up` to migrate database.")

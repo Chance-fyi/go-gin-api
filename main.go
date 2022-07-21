@@ -1,16 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"go-gin-api/app/cmd"
-	"os"
+	"go-gin-api/pkg/console"
 )
 
 func main() {
 	c := cmd.RootCommand()
-
-	if err := c.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	err := c.Execute()
+	console.ExitIf(err)
 }
