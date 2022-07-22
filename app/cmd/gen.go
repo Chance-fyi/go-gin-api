@@ -14,7 +14,7 @@ func genCommand() *cobra.Command {
 		Use:   "gen",
 		Short: "generate file and code",
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
-			boot.Boot.Init()
+			boot.Init()
 		},
 	}
 

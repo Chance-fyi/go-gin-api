@@ -9,17 +9,9 @@ import (
 	"go-gin-api/pkg/redis"
 )
 
-type redisConfig struct {
-	Host     string
-	Port     string
-	Password string
-	DB       int
-}
-
-var Redis = redisConfig{}
-
-func (r *redisConfig) Init() {
-	config.UnmarshalKey("redis", &Redis)
+func initRedis() {
+	var r redis.Config
+	config.UnmarshalKey("redis", &r)
 	redis.NewClient(fmt.Sprintf("%v:%v", r.Host, r.Port), r.Password, r.DB)
 	if err := g.Redis().Ping(context.Background()).Err(); err != nil {
 		console.ExitIf(err)

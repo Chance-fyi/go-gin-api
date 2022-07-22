@@ -9,7 +9,7 @@ import (
 )
 
 func TestRedis(t *testing.T) {
-	boot.Boot.Init()
+	boot.Init()
 	ctx := c.Background()
 	Convey("redis ping", t, func() {
 		So(g.Redis().Ping(ctx).Err(), ShouldBeNil)

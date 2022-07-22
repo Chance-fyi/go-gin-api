@@ -12,7 +12,7 @@ func migrateCommand() *cobra.Command {
 		Use:   "migrate",
 		Short: "run all unexecuted migrations",
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
-			boot.Boot.Init()
+			boot.Init()
 			migrations.Init()
 		},
 		Run: func(cmd *cobra.Command, args []string) {

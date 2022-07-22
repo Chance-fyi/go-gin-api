@@ -16,7 +16,7 @@ func serverCommand() *cobra.Command {
 		Use:   "server",
 		Short: "start http service",
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
-			boot.Boot.Init()
+			boot.Init()
 		},
 		Run: func(cmd *cobra.Command, args []string) {
 			runServer(opt)

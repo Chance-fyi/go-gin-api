@@ -5,12 +5,7 @@ import (
 	log "go-gin-api/pkg/logger"
 )
 
-type logger struct {
-}
-
-var Logger = logger{}
-
-func (*logger) Init() {
+func initLogger() {
 	var cfg log.Config
 	config.UnmarshalKey("logger", &cfg)
 	log.InitLogger(&cfg)

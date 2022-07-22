@@ -4,26 +4,21 @@ import (
 	"errors"
 	"fmt"
 	"go-gin-api/pkg/config"
-	Db "go-gin-api/pkg/database"
+	"go-gin-api/pkg/database"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-type database struct {
-	config Db.Config
+func initDatabase() {
+	var cfg database.Config
+	config.UnmarshalKey("database", &cfg)
+	database.DB.SetDefaultConnect(cfg.Default)
+	setupDb(cfg)
 }
 
-var Database = database{}
-
-func (db *database) Init() {
-	config.UnmarshalKey("database", &db.config)
-	Db.DB.SetDefaultConnect(db.config.Default)
-	db.setupDb()
-}
-
-func (db *database) setupDb() {
+func setupDb(cfg database.Config) {
 	var dialector gorm.Dialector
-	for name, conn := range db.config.Connections {
+	for name, conn := range cfg.Connections {
 		switch conn.Type {
 		case "mysql":
 			dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=%v&parseTime=True&loc=Local",
@@ -40,6 +35,6 @@ func (db *database) setupDb() {
 		default:
 			panic(errors.New("database connection not supported"))
 		}
-		Db.DB.CreateConnection(name, dialector, conn)
+		database.DB.CreateConnection(name, dialector, conn)
 	}
 }

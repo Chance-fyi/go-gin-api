@@ -10,7 +10,7 @@ import (
 )
 
 func TestMigrate(t *testing.T) {
-	boot.Boot.Init()
+	boot.Init()
 	type TestTable1 struct {
 		Id   int
 		Name string
