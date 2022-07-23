@@ -74,8 +74,7 @@ func setEnvVariables(cfg *viper.Viper) {
 	err := viper.ReadInConfig()
 	console.ExitIf(err)
 
-	for key, value := range viper.AllSettings() {
-		key = strings.ReplaceAll(key, "_", ".")
-		cfg.Set(key, value)
+	for _, key := range viper.AllKeys() {
+		cfg.Set(key, viper.Get(key))
 	}
 }
