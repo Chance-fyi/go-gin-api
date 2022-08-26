@@ -8,4 +8,5 @@ func Init() {
 	initDatabase()
 	initRedis()
 	initLogger()
+	initValidator()
 }
