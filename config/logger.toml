@@ -3,10 +3,10 @@ level = "error"
 # log save path
 filename = "runtime/logs/logs.log"
 # maximum size of each log file, unit: M
-max_size = 10
+maxSize = 10
 # the maximum number of saved log files, 0 is unlimited
-max_backup = 5
+maxBackups = 5
 # how many days save at most，0 means not to delete
-max_age = 30
+maxAge = 30
 # compress or not
 compress = false
